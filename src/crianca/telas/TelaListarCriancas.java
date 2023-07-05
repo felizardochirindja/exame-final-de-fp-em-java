@@ -24,7 +24,7 @@ public class TelaListarCriancas extends JFrame {
 
         add(painelPrincipal);
 
-        setTitle("estudantes com divida");
+        setTitle("listar criancas");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(1000, 600);
         setLocationRelativeTo(null);

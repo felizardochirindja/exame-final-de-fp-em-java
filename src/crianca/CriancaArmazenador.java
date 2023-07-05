@@ -12,7 +12,7 @@ public class CriancaArmazenador {
         criancas.add(crianca);
 
         try {
-            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\clientes.dat");
+            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\criancas.dat");
             ObjectOutputStream os = new ObjectOutputStream(ficheiro);
 
             os.writeObject(criancas);
@@ -79,6 +79,8 @@ public class CriancaArmazenador {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+//        System.out.println(criancas.get(0));
 
         return criancas;
     }

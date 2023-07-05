@@ -5,10 +5,12 @@ import crianca.tipos.Sexo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class Crianca implements Serializable {
+    private static final long serialVersionUID = -8577697151743549160L;
     private String codigo;
     private String nome;
     private Date dataDeNascimento;
@@ -97,8 +99,13 @@ public class Crianca implements Serializable {
         this.removida = false;
     }
 
-    public int calcularIdade() {
-        return Period.between(LocalDate.of(dataDeNascimento.getYear(), dataDeNascimento.getMonth(), dataDeNascimento.getDay()), LocalDate.now()).getYears();
+    public Long calcularIdade() {
+        Long idade = ChronoUnit.YEARS.between(
+                dataDeNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                LocalDate.now()
+        );
+
+        return idade;
     }
 
     @Override

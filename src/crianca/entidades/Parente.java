@@ -5,6 +5,8 @@ import crianca.tipos.Parentesco;
 import java.io.Serializable;
 
 public class Parente implements Serializable {
+    private static final long serialVersionUID = -8577697151743549160L;
+
     private String codigo;
     private String nome;
     private Parentesco parentesco;

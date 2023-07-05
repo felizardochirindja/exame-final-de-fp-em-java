@@ -30,17 +30,17 @@ public class CriancaArmazenador {
     public void actualizar(String id, Crianca crianca) {
         List<Crianca> criancas = listar();
 
-        for (Crianca value : criancas) {
-            if (value.getCodigo().equals(id)) {
-                value.setNome(crianca.getNome());
-                value.setSexo(crianca.getSexo());
-                value.atribuirParente(crianca.getParente());
-                value.setDataDeNascimento(crianca.getDataDeNascimento());
-                value.setCodigo(crianca.getCodigo());
-                value.desfazerDelecao();
+        for (Crianca criancaDaLista: criancas) {
+            if (criancaDaLista.getCodigo().equals(id)) {
+                criancaDaLista.atribuirNome(criancaDaLista.getNome());
+                criancaDaLista.setSexo(criancaDaLista.getSexo());
+                criancaDaLista.atribuirParente(criancaDaLista.getParente());
+                criancaDaLista.setDataDeNascimento(criancaDaLista.getDataDeNascimento());
+                criancaDaLista.atribuirCodigo(criancaDaLista.getCodigo());
+                criancaDaLista.desfazerDelecao();
 
                 try {
-                    value.receberPrenda(crianca.getPrenda());
+                    criancaDaLista.receberPrenda(criancaDaLista.getPrenda());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -48,7 +48,7 @@ public class CriancaArmazenador {
         }
 
         try {
-            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\clientes.dat");
+            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\criancas.dat");
             ObjectOutputStream os = new ObjectOutputStream(ficheiro);
 
             os.writeObject(criancas);
@@ -67,7 +67,7 @@ public class CriancaArmazenador {
         List<Crianca> criancas = new ArrayList<>();
 
         try {
-            FileInputStream ficheiro = new FileInputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\clientes.dat");
+            FileInputStream ficheiro = new FileInputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\criancas.dat");
             ObjectInputStream objecto = new ObjectInputStream(ficheiro);
 
             criancas = (ArrayList<Crianca>) objecto.readObject();
@@ -95,7 +95,7 @@ public class CriancaArmazenador {
         }
 
         try {
-            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\clientes.dat");
+            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\criancas.dat");
             ObjectOutputStream os = new ObjectOutputStream(ficheiro);
 
             os.writeObject(criancas);
@@ -122,7 +122,7 @@ public class CriancaArmazenador {
         }
 
         try {
-            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\clientes.dat");
+            FileOutputStream ficheiro = new FileOutputStream("C:\\xampp\\htdocs\\my_space\\java\\felizardo_chirindja\\ficheiros\\criancas.dat");
             ObjectOutputStream os = new ObjectOutputStream(ficheiro);
 
             os.writeObject(criancas);

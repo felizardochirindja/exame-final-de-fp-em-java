@@ -10,11 +10,8 @@ public class FormularioDosDadosDoParente extends JPanel {
     private JLabel labelApelido = new JLabel("apelido");
     public JTextField campoApelido = new JTextField(20);
 
-    private JLabel labelSexo = new JLabel("sexo");
-    public JComboBox<String> campoSexo;
-
-    private JLabel labeldataDeNascimento = new JLabel("data de nascimento");
-    public JTextField campoDataDeNascimento = new JTextField(20);
+    private JLabel labelParentesco = new JLabel("parentesco");
+    public JComboBox<String> comboBoxParentesco = new JComboBox<>();
 
     public JButton botaoRegistrar = new JButton("registrar");
 
@@ -28,11 +25,13 @@ public class FormularioDosDadosDoParente extends JPanel {
         add(labelApelido);
         add(campoApelido);
 
-        add(labelSexo);
-        add(campoNome);
+        DefaultComboBoxModel<String> modeloDoComboboxParentesco = new DefaultComboBoxModel<>();
+        modeloDoComboboxParentesco.addElement("Pai");
+        modeloDoComboboxParentesco.addElement("Mae");
+        comboBoxParentesco.setModel(modeloDoComboboxParentesco);
 
-        add(labeldataDeNascimento);
-        add(campoDataDeNascimento);
+        add(labelParentesco);
+        add(comboBoxParentesco);
 
         add(new JLabel());
         add(botaoRegistrar);

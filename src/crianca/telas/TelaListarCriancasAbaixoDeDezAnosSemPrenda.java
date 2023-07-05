@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class TelaListarCriancasAbaixoDeDezAnosSemPrenda extends JFrame {
     private JTable tabela;
-    public DefaultTableModel modeloDaTabela;
+    public DefaultTableModel modeloDaTabela = new DefaultTableModel();
 
     public TelaListarCriancasAbaixoDeDezAnosSemPrenda() {
         JPanel painelPrincipal = new JPanel(new BorderLayout());

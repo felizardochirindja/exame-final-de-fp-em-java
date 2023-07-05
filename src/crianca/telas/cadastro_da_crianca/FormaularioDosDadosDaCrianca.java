@@ -11,7 +11,8 @@ public class FormaularioDosDadosDaCrianca extends JPanel {
     public JTextField campoApelido = new JTextField(20);
 
     private JLabel labelSexo = new JLabel("sexo");
-    public JComboBox<String> campoSexo;
+    private JRadioButton radioButtonSexoMasculino = new JRadioButton("Masculino");
+    private JRadioButton radioButtonSexoFemenino = new JRadioButton("Femenino");
 
     private JLabel labeldataDeNascimento = new JLabel("data de nascimento");
     public JTextField campoDataDeNascimento = new JTextField(20);
@@ -26,10 +27,27 @@ public class FormaularioDosDadosDaCrianca extends JPanel {
         add(labelApelido);
         add(campoApelido);
 
+        ButtonGroup buttonGroupSexo = new ButtonGroup();
+        buttonGroupSexo.add(radioButtonSexoMasculino);
+        buttonGroupSexo.add(radioButtonSexoFemenino);
         add(labelSexo);
-        add(campoNome);
+        add(new JLabel());
+        add(radioButtonSexoMasculino);
+        add(radioButtonSexoFemenino);
 
         add(labeldataDeNascimento);
         add(campoDataDeNascimento);
+    }
+
+    public String getSexo() {
+        if (radioButtonSexoFemenino.isSelected()) {
+            return radioButtonSexoFemenino.getText();
+        }
+
+        if (radioButtonSexoMasculino.isSelected()) {
+            return radioButtonSexoMasculino.getText();
+        }
+
+        return null;
     }
 }

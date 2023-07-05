@@ -3,13 +3,13 @@ package crianca.telas.cadastro_da_crianca;
 import javax.swing.*;
 
 public class TelaCadastrarCrianca extends JFrame {
-    public JPanel painelCrianca = new FormaularioDosDadosDaCrianca();
+    public FormaularioDosDadosDaCrianca formularioDosDadosDaCrianca = new FormaularioDosDadosDaCrianca();
     public FormularioDosDadosDoParente formularioDosDadosDoParente = new FormularioDosDadosDoParente();
 
     public TelaCadastrarCrianca() {
         JTabbedPane painelPrincipal = new JTabbedPane();
 
-        painelPrincipal.addTab("crianca", painelCrianca);
+        painelPrincipal.addTab("crianca", formularioDosDadosDaCrianca);
         painelPrincipal.addTab("parente", formularioDosDadosDoParente);
 
         add(painelPrincipal);

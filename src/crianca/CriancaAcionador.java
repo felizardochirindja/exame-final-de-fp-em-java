@@ -4,11 +4,12 @@ import crianca.entidades.Crianca;
 import crianca.tipos.Prenda;
 
 import java.util.List;
+import java.util.UUID;
 
-public class CriancaAccoes {
+public class CriancaAcionador {
     private CriancaArmazenador armazenador;
 
-    public CriancaAccoes(CriancaArmazenador armazenador) {
+    public CriancaAcionador(CriancaArmazenador armazenador) {
         this.armazenador = armazenador;
     }
 
@@ -25,6 +26,8 @@ public class CriancaAccoes {
     }
 
     public void cadastrarCrianca(Crianca crianca) {
+        System.out.println(crianca);
+        crianca.atribuirCodigo(UUID.randomUUID().toString());
         armazenador.criar(crianca);
     }
 

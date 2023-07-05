@@ -11,23 +11,44 @@ import crianca.tipos.Sexo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CriancaControlador {
-    public CriancaControlador(TelaCadastrarCrianca tela, CriancaAccoes accoes) {
+    public CriancaControlador(TelaCadastrarCrianca tela, CriancaAcionador acionador) {
         tela.formularioDosDadosDoParente.botaoRegistrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Parente parente = new Parente("parente", Parentesco.valueOf("mae"));
-                Crianca crianca = new Crianca("crianca", null, Sexo.Masculino, parente);
+                // dados da crianca
+                String nomeDaCrianca = tela.formularioDosDadosDaCrianca.campoNome.getText();
+                String apelidoDaCrianca = tela.formularioDosDadosDaCrianca.campoApelido.getText();
+                Sexo sexoDaCrianca = Sexo.valueOf(tela.formularioDosDadosDaCrianca.getSexo());
 
-                accoes.cadastrarCrianca(crianca);
+                String textoDataDeNascimento = tela.formularioDosDadosDaCrianca.campoDataDeNascimento.getText();
+                Date dataDeNascimento;
+                try {
+                    dataDeNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(textoDataDeNascimento);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                // dados do patente
+                String nomeDoParente = tela.formularioDosDadosDoParente.campoNome.getText();
+                String apelidoDoParente = tela.formularioDosDadosDoParente.campoApelido.getText();
+                Parentesco parentesco = Parentesco.valueOf(tela.formularioDosDadosDoParente.comboBoxParentesco.getSelectedItem().toString());
+
+                Parente parente = new Parente(nomeDoParente, parentesco);
+                Crianca crianca = new Crianca(nomeDaCrianca, dataDeNascimento, sexoDaCrianca, parente);
+
+                acionador.cadastrarCrianca(crianca);
             }
         });
     }
 
-    public CriancaControlador(TelaListarCriancas tela, CriancaAccoes accoes) {
-        List<Crianca> criancas = accoes.listarTodasCriancas();
+    public CriancaControlador(TelaListarCriancas tela, CriancaAcionador acionador) {
+        List<Crianca> criancas = acionador.listarTodasCriancas();
 
         for (int i = 0; i < criancas.size(); i++) {
             Object[] linhaDaTabela = {
@@ -42,8 +63,8 @@ public class CriancaControlador {
         }
     }
 
-    public CriancaControlador(TelaListarCriancasAbaixoDeDezAnosSemPrenda tela, CriancaAccoes accoes) {
-        List<Crianca> criancas = accoes.listarTodasCriancas();
+    public CriancaControlador(TelaListarCriancasAbaixoDeDezAnosSemPrenda tela, CriancaAcionador acionador) {
+        List<Crianca> criancas = acionador.listarTodasCriancas();
 
         for (int i = 0; i < criancas.size(); i++) {
             Object[] linhaDaTabela = {
@@ -58,8 +79,8 @@ public class CriancaControlador {
         }
     }
 
-    public CriancaControlador(TelaContarPrendasOferecidas tela, CriancaAccoes accoes) {
-        int numeroDeBonecas = accoes.contarBonecasOferecidas();
-        int numeroDeCarrinhos = accoes.contarCarrinhosOferecidos();
+    public CriancaControlador(TelaContarPrendasOferecidas tela, CriancaAcionador acionador) {
+        int numeroDeBonecas = acionador.contarBonecasOferecidas();
+        int numeroDeCarrinhos = acionador.contarCarrinhosOferecidos();
     }
 }

@@ -1,9 +1,8 @@
 package painel;
 
-import crianca.CriancaAccoes;
+import crianca.CriancaAcionador;
 import crianca.CriancaArmazenador;
 import crianca.CriancaControlador;
-import crianca.telas.TelaContarPrendasOferecidas;
 import crianca.telas.TelaListarCriancasAbaixoDeDezAnosSemPrenda;
 import crianca.telas.cadastro_da_crianca.TelaCadastrarCrianca;
 import crianca.telas.TelaListarCriancas;
@@ -24,37 +23,46 @@ public class TelaPainel extends JFrame {
         painel.setLayout(new GridLayout(2, 1, 5, 5));
         painel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        painel.add(botaoRegistrarCrianca);
-
         botaoRegistrarCrianca.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaCadastrarCrianca(), new CriancaAccoes(new CriancaArmazenador()));
+                new CriancaControlador(new TelaCadastrarCrianca(), new CriancaAcionador(new CriancaArmazenador()));
             }
         });
+
+        painel.add(botaoRegistrarCrianca);
 
         botaoListarCriancas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaListarCriancas(), new CriancaAccoes(new CriancaArmazenador()));
-            }
-        });
-
-        botaoContarPrendasOferecidas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaContarPrendasOferecidas(), new CriancaAccoes(new CriancaArmazenador()));
-            }
-        });
-
-        botaoListarCriancasAbaixoDeDezAnosSemPrenda.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaListarCriancasAbaixoDeDezAnosSemPrenda(), new CriancaAccoes(new CriancaArmazenador()));
+                new CriancaControlador(new TelaListarCriancas(), new CriancaAcionador(new CriancaArmazenador()));
             }
         });
 
         painel.add(botaoListarCriancas);
+
+        botaoListarCriancasAbaixoDeDezAnosSemPrenda.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CriancaControlador(new TelaListarCriancasAbaixoDeDezAnosSemPrenda(), new CriancaAcionador(new CriancaArmazenador()));
+            }
+        });
+
+        painel.add(botaoListarCriancasAbaixoDeDezAnosSemPrenda);
+
+        botaoContarPrendasOferecidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CriancaAcionador accoes = new CriancaAcionador(new CriancaArmazenador());
+
+                int numeroDeBonecas = accoes.contarBonecasOferecidas();
+                int numeroDeCarrinhos = accoes.contarCarrinhosOferecidos();
+
+                // abrir dialog
+            }
+        });
+
+        painel.add(botaoContarPrendasOferecidas);
 
         add(painel);
 

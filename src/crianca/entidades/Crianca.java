@@ -22,9 +22,10 @@ public class Crianca implements Serializable {
         this.dataDeNascimento = dataDeNascimento;
         this.sexo = sexo;
         this.parente = parente;
+        this.removida = false;
     }
 
-    public void setCodigo(String codigo) {
+    public void atribuirCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -68,7 +69,7 @@ public class Crianca implements Serializable {
         this.prenda = prenda;
     }
 
-    public void setNome(String nome) {
+    public void atribuirNome(String nome) {
         this.nome = nome;
     }
 
@@ -98,5 +99,18 @@ public class Crianca implements Serializable {
 
     public int calcularIdade() {
         return Period.between(LocalDate.of(dataDeNascimento.getYear(), dataDeNascimento.getMonth(), dataDeNascimento.getDay()), LocalDate.now()).getYears();
+    }
+
+    @Override
+    public String toString() {
+        return "Crianca{" +
+                "codigo='" + codigo + '\'' +
+                ", nome='" + nome + '\'' +
+                ", dataDeNascimento=" + dataDeNascimento +
+                ", sexo=" + sexo +
+                ", parente=" + parente +
+                ", prenda=" + prenda +
+                ", removida=" + removida +
+                '}';
     }
 }

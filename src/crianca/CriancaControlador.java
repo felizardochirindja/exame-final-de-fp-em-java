@@ -9,8 +9,11 @@ import crianca.telas.TelaListarCriancas;
 import crianca.tipos.Parentesco;
 import crianca.tipos.Sexo;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -61,6 +64,28 @@ public class CriancaControlador {
 
             tela.modeloDaTabela.addRow(linhaDaTabela);
         }
+
+        tela.tabela.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    int row = tela.tabela.rowAtPoint(e.getPoint());
+
+                    if (row >= 0 && row < tela.tabela.getRowCount()) {
+                        JPopupMenu popupMenu = new JPopupMenu();
+                        JMenuItem menuItemOferecerPrenda = new JMenuItem("oferecre prenda");
+                        JMenuItem menuItemActualizar = new JMenuItem("actualizar");
+                        JMenuItem menuItemDeletar = new JMenuItem("deletar");
+                        popupMenu.add(menuItemDeletar);
+                        popupMenu.add(menuItemOferecerPrenda);
+                        popupMenu.add(menuItemActualizar);
+
+                        tela.tabela.setRowSelectionInterval(row, row);
+                        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                    }
+                }
+            }
+        });
     }
 
     public CriancaControlador(TelaListarCriancasAbaixoDeDezAnosSemPrenda tela, CriancaAcionador acionador) {

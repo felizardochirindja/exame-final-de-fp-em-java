@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class TelaListarCriancas extends JFrame {
-    private JTable tabela;
+    public JTable tabela;
     public DefaultTableModel modeloDaTabela = new DefaultTableModel();
 
     public TelaListarCriancas() {

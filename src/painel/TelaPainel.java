@@ -3,7 +3,7 @@ package painel;
 import crianca.CriancaAcionador;
 import crianca.CriancaArmazenador;
 import crianca.CriancaControlador;
-import crianca.telas.TelaListarCriancasAbaixoDeDezAnosSemPrenda;
+import crianca.telas.TelaListarCriancasComPrenda;
 import crianca.telas.cadastro_da_crianca.TelaCadastrarCrianca;
 import crianca.telas.TelaListarCriancas;
 
@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 public class TelaPainel extends JFrame {
     private JButton botaoRegistrarCrianca = new JButton("registrar crianca");
     private JButton botaoListarCriancas = new JButton("listar criancas");
+    private JButton botaoListarCriancasComPrenda = new JButton("listar criancas que receberam prenda");
     private JButton botaoContarPrendasOferecidas = new JButton("contar prendas oferecidas");
     private JButton botaoListarCriancasAbaixoDeDezAnosSemPrenda = new JButton("listar criancas abaixo de dez anos sem prenda");
 
@@ -41,14 +42,14 @@ public class TelaPainel extends JFrame {
 
         painel.add(botaoListarCriancas);
 
-        botaoListarCriancasAbaixoDeDezAnosSemPrenda.addActionListener(new ActionListener() {
+        botaoListarCriancasComPrenda.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaListarCriancasAbaixoDeDezAnosSemPrenda(), new CriancaAcionador(new CriancaArmazenador()));
+                new CriancaControlador(new TelaListarCriancasComPrenda(), new CriancaAcionador(new CriancaArmazenador()));
             }
         });
 
-        painel.add(botaoListarCriancasAbaixoDeDezAnosSemPrenda);
+        painel.add(botaoListarCriancasComPrenda);
 
         botaoContarPrendasOferecidas.addActionListener(new ActionListener() {
             @Override
@@ -58,7 +59,14 @@ public class TelaPainel extends JFrame {
                 int numeroDeBonecas = accoes.contarBonecasOferecidas();
                 int numeroDeCarrinhos = accoes.contarCarrinhosOferecidos();
 
-                // abrir dialog
+                JOptionPane.showMessageDialog(null, "O numero de bonecas atribuidas foi: " + numeroDeBonecas + " e o numero de carrinhos atribuidos foi: " + numeroDeCarrinhos);
+            }
+        });
+
+        botaoListarCriancasAbaixoDeDezAnosSemPrenda.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicado");
             }
         });
 

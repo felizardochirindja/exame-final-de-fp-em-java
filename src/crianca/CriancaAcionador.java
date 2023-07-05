@@ -2,7 +2,9 @@ package crianca;
 
 import crianca.entidades.Crianca;
 import crianca.tipos.Prenda;
+import crianca.tipos.Sexo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,11 +16,12 @@ public class CriancaAcionador {
     }
 
     public List<Crianca> listarTodasCriancas() {
-        List<Crianca> criancas = armazenador.listar();
+        List<Crianca> todasCriancas = armazenador.listar();
+        List<Crianca> criancas = new ArrayList<>();
 
-        for (int i = 0; i < criancas.size(); i++) {
-            if (criancas.get(i).foiRemovida()) {
-                criancas.remove(i);
+        for (int i = 0; i < todasCriancas.size(); i++) {
+            if (!todasCriancas.get(i).foiRemovida()) {
+                criancas.add(todasCriancas.get(i));
             }
         }
 
@@ -26,7 +29,6 @@ public class CriancaAcionador {
     }
 
     public void cadastrarCrianca(Crianca crianca) {
-        System.out.println(crianca);
         crianca.atribuirCodigo(UUID.randomUUID().toString());
         armazenador.criar(crianca);
     }
@@ -40,25 +42,34 @@ public class CriancaAcionador {
     }
 
     public List<Crianca> listarCriancasQueReceberamPrenda() {
-        List<Crianca> criancas = armazenador.listar();
+        List<Crianca> todasCriancas = armazenador.listar();
+        List<Crianca> criancas = new ArrayList<>();
 
-        for (int i = 0; i < criancas.size(); i++) {
-            if (criancas.get(i).foiRemovida() || !criancas.get(i).recebeuPrenda()) {
-                criancas.remove(i);
+        for (int i = 0; i < todasCriancas.size(); i++) {
+            if (todasCriancas.get(i).recebeuPrenda() && !todasCriancas.get(i).foiRemovida()) {
+                criancas.add(todasCriancas.get(i));
             }
         }
 
         return criancas;
     }
 
-    public void oferecerPrenda(String id, Prenda prenda) {
+    public void receberPrenda(String id) {
         Crianca crianca = armazenador.lerPorId(id);
+
+        Prenda prenda = Prenda.Carrinho;
+
+        if (crianca.getSexo() == Sexo.Femenino) {
+            prenda = Prenda.Boneca;
+        }
 
         try {
             crianca.receberPrenda(prenda);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        armazenador.actualizar(id, crianca);
     }
 
     public List<Crianca> pesquisarCriancasAbaixoDeDezAnosSemPrenda() {
@@ -74,7 +85,7 @@ public class CriancaAcionador {
     }
 
     public int contarCarrinhosOferecidos() {
-        List<Crianca> criancasReceberamPrenda = this.listarCriancasQueReceberamPrenda();
+        List<Crianca> criancasReceberamPrenda = armazenador.listar();
 
         int numeroDeCarrinhosOferecidos = 0;
 
@@ -88,7 +99,7 @@ public class CriancaAcionador {
     }
 
     public int contarBonecasOferecidas() {
-        List<Crianca> criancasQueReceberamPrenda = this.listarCriancasQueReceberamPrenda();
+        List<Crianca> criancasQueReceberamPrenda = armazenador.listar();
 
         int numeroBonecasOferecidas = 0;
 

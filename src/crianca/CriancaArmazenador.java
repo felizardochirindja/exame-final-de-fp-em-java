@@ -32,15 +32,15 @@ public class CriancaArmazenador {
 
         for (Crianca criancaDaLista: criancas) {
             if (criancaDaLista.getCodigo().equals(id)) {
-                criancaDaLista.atribuirNome(criancaDaLista.getNome());
-                criancaDaLista.setSexo(criancaDaLista.getSexo());
-                criancaDaLista.atribuirParente(criancaDaLista.getParente());
-                criancaDaLista.setDataDeNascimento(criancaDaLista.getDataDeNascimento());
-                criancaDaLista.atribuirCodigo(criancaDaLista.getCodigo());
+                criancaDaLista.atribuirNome(crianca.getNome());
+                criancaDaLista.setSexo(crianca.getSexo());
+                criancaDaLista.atribuirParente(crianca.getParente());
+                criancaDaLista.setDataDeNascimento(crianca.getDataDeNascimento());
+                criancaDaLista.atribuirCodigo(crianca.getCodigo());
                 criancaDaLista.desfazerDelecao();
 
                 try {
-                    criancaDaLista.receberPrenda(criancaDaLista.getPrenda());
+                    criancaDaLista.receberPrenda(crianca.getPrenda());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -80,8 +80,6 @@ public class CriancaArmazenador {
             e.printStackTrace();
         }
 
-//        System.out.println(criancas.get(0));
-
         return criancas;
     }
 
@@ -120,6 +118,7 @@ public class CriancaArmazenador {
         for (Crianca crianca : criancas) {
             if (crianca.getCodigo().equals(id)) {
                 crianca.deletar();
+                System.out.println(crianca);
             }
         }
 

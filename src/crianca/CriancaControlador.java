@@ -2,8 +2,7 @@ package crianca;
 
 import crianca.entidades.Crianca;
 import crianca.entidades.Parente;
-import crianca.telas.TelaContarPrendasOferecidas;
-import crianca.telas.TelaListarCriancasAbaixoDeDezAnosSemPrenda;
+import crianca.telas.TelaListarCriancasComPrenda;
 import crianca.telas.cadastro_da_crianca.TelaCadastrarCrianca;
 import crianca.telas.TelaListarCriancas;
 import crianca.tipos.Parentesco;
@@ -17,9 +16,12 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class CriancaControlador {
+    HashMap<Integer, String> codigosDasCriancas = new HashMap<>();
+
     public CriancaControlador(TelaCadastrarCrianca tela, CriancaAcionador acionador) {
         tela.formularioDosDadosDoParente.botaoRegistrar.addActionListener(new ActionListener() {
             @Override
@@ -63,6 +65,7 @@ public class CriancaControlador {
             };
 
             tela.modeloDaTabela.addRow(linhaDaTabela);
+            codigosDasCriancas.put(i, criancas.get(i).getCodigo());
         }
 
         tela.tabela.addMouseListener(new MouseAdapter() {
@@ -73,12 +76,48 @@ public class CriancaControlador {
 
                     if (row >= 0 && row < tela.tabela.getRowCount()) {
                         JPopupMenu popupMenu = new JPopupMenu();
-                        JMenuItem menuItemOferecerPrenda = new JMenuItem("oferecre prenda");
-                        JMenuItem menuItemActualizar = new JMenuItem("actualizar");
-                        JMenuItem menuItemDeletar = new JMenuItem("deletar");
-                        popupMenu.add(menuItemDeletar);
+
+                        // menu oferecer prenda
+                        JMenuItem menuItemOferecerPrenda = new JMenuItem("oferecer prenda");
+                        menuItemOferecerPrenda.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                int linhaSelecionada = tela.tabela.getSelectedRow();
+                                String codigoDaCriancaSelecionada = codigosDasCriancas.get(linhaSelecionada);
+
+                                acionador.receberPrenda(codigoDaCriancaSelecionada);
+                            }
+                        });
                         popupMenu.add(menuItemOferecerPrenda);
+
+                        // menu actualizar
+                        JMenuItem menuItemActualizar = new JMenuItem("actualizar");
+                        menuItemActualizar.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                int linhaSelecionada = tela.tabela.getSelectedRow();
+                                String codigoDaCriancaSelecionada  =codigosDasCriancas.get(linhaSelecionada);
+
+                                tela.dispose();
+                                new CriancaControlador(new TelaCadastrarCrianca(), new CriancaAcionador(new CriancaArmazenador()));
+                            }
+                        });
                         popupMenu.add(menuItemActualizar);
+
+                        // menu deletar
+                        JMenuItem menuItemDeletar = new JMenuItem("deletar");
+                        menuItemDeletar.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                int selectedRow = tela.tabela.getSelectedRow();
+                                String codigoDaCriancaSelecionada = codigosDasCriancas.get(selectedRow);
+
+                                acionador.removerCrianca(codigoDaCriancaSelecionada);
+                                tela.dispose();
+                                new CriancaControlador(new TelaListarCriancas(), new CriancaAcionador(new CriancaArmazenador()));
+                            }
+                        });
+                        popupMenu.add(menuItemDeletar);
 
                         tela.tabela.setRowSelectionInterval(row, row);
                         popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -88,8 +127,8 @@ public class CriancaControlador {
         });
     }
 
-    public CriancaControlador(TelaListarCriancasAbaixoDeDezAnosSemPrenda tela, CriancaAcionador acionador) {
-        List<Crianca> criancas = acionador.listarTodasCriancas();
+    public CriancaControlador(TelaListarCriancasComPrenda tela, CriancaAcionador acionador) {
+        List<Crianca> criancas = acionador.listarCriancasQueReceberamPrenda();
 
         for (int i = 0; i < criancas.size(); i++) {
             Object[] linhaDaTabela = {
@@ -102,10 +141,5 @@ public class CriancaControlador {
 
             tela.modeloDaTabela.addRow(linhaDaTabela);
         }
-    }
-
-    public CriancaControlador(TelaContarPrendasOferecidas tela, CriancaAcionador acionador) {
-        int numeroDeBonecas = acionador.contarBonecasOferecidas();
-        int numeroDeCarrinhos = acionador.contarCarrinhosOferecidos();
     }
 }

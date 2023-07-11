@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CriancaArmazenador {
+public final class CriancaArmazenador {
     public void criar(Crianca crianca) {
         List<Crianca> criancas = listar();
         criancas.add(crianca);
@@ -27,22 +27,25 @@ public class CriancaArmazenador {
         }
     }
 
-    public void actualizar(String id, Crianca crianca) {
+    public void actualizar(String codigo, Crianca crianca) {
         List<Crianca> criancas = listar();
 
         for (Crianca criancaDaLista: criancas) {
-            if (criancaDaLista.getCodigo().equals(id)) {
+            if (criancaDaLista.getCodigo().equals(codigo)) {
                 criancaDaLista.atribuirNome(crianca.getNome());
                 criancaDaLista.setSexo(crianca.getSexo());
                 criancaDaLista.atribuirParente(crianca.getParente());
                 criancaDaLista.setDataDeNascimento(crianca.getDataDeNascimento());
-                criancaDaLista.atribuirCodigo(crianca.getCodigo());
+                criancaDaLista.atribuirCodigo(codigo);
+                criancaDaLista.setApelido(crianca.getApelido());
                 criancaDaLista.desfazerDelecao();
 
-                try {
-                    criancaDaLista.receberPrenda(crianca.getPrenda());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                if (!criancaDaLista.recebeuPrenda()) {
+                    try {
+                        criancaDaLista.receberPrenda(crianca.getPrenda());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
@@ -80,6 +83,8 @@ public class CriancaArmazenador {
             e.printStackTrace();
         }
 
+        // logica para inverter a ordem
+
         return criancas;
     }
 
@@ -88,7 +93,7 @@ public class CriancaArmazenador {
 
         Crianca crianca = null;
 
-        for (Crianca value : criancas) {
+        for (Crianca value: criancas) {
             if (value.getCodigo().equals(id)) {
                 crianca = value;
             }

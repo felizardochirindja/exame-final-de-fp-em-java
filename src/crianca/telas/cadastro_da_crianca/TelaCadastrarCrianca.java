@@ -2,8 +2,8 @@ package crianca.telas.cadastro_da_crianca;
 
 import javax.swing.*;
 
-public class TelaCadastrarCrianca extends JFrame {
-    public FormaularioDosDadosDaCrianca formularioDosDadosDaCrianca = new FormaularioDosDadosDaCrianca();
+public final class TelaCadastrarCrianca extends JFrame {
+    public FormularioDosDadosDaCrianca formularioDosDadosDaCrianca = new FormularioDosDadosDaCrianca();
     public FormularioDosDadosDoParente formularioDosDadosDoParente = new FormularioDosDadosDoParente();
 
     public TelaCadastrarCrianca() {

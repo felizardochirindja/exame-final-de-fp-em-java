@@ -1,8 +1,6 @@
 package painel;
 
-import crianca.CriancaAcionador;
-import crianca.CriancaArmazenador;
-import crianca.CriancaControlador;
+import crianca.*;
 import crianca.telas.TelaListarCriancasComPrenda;
 import crianca.telas.cadastro_da_crianca.TelaCadastrarCrianca;
 import crianca.telas.TelaListarCriancas;
@@ -12,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TelaPainel extends JFrame {
+public final class TelaPainel extends JFrame {
     private JButton botaoRegistrarCrianca = new JButton("registrar crianca");
     private JButton botaoListarCriancas = new JButton("listar criancas");
     private JButton botaoListarCriancasComPrenda = new JButton("listar criancas que receberam prenda");
@@ -27,7 +25,7 @@ public class TelaPainel extends JFrame {
         botaoRegistrarCrianca.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaCadastrarCrianca(), new CriancaAcionador(new CriancaArmazenador()));
+                new CriancaControlador(new TelaCadastrarCrianca(), new CriancaAcionador(new CriancaArmazenador()), null);
             }
         });
 
@@ -36,7 +34,7 @@ public class TelaPainel extends JFrame {
         botaoListarCriancas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CriancaControlador(new TelaListarCriancas(), new CriancaAcionador(new CriancaArmazenador()));
+                new CriancaControlador(new TelaListarCriancas(), new CriancaAcionador(new CriancaArmazenador()), true);
             }
         });
 
@@ -63,14 +61,16 @@ public class TelaPainel extends JFrame {
             }
         });
 
+        painel.add(botaoContarPrendasOferecidas);
+
         botaoListarCriancasAbaixoDeDezAnosSemPrenda.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("clicado");
+                new CriancaControlador(new TelaListarCriancas(), new CriancaAcionador(new CriancaArmazenador()), false);
             }
         });
 
-        painel.add(botaoContarPrendasOferecidas);
+        painel.add(botaoListarCriancasAbaixoDeDezAnosSemPrenda);
 
         add(painel);
 

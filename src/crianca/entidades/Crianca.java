@@ -9,18 +9,21 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-public class Crianca implements Serializable {
+public final class Crianca implements Serializable {
     private static final long serialVersionUID = -8577697151743549160L;
+
     private String codigo;
     private String nome;
+    private String apelido;
     private Date dataDeNascimento;
     private Sexo sexo;
     private Parente parente;
     private Prenda prenda;
     private boolean removida;
 
-    public Crianca(String nome, Date dataDeNascimento, Sexo sexo, Parente parente) {
+    public Crianca(String nome, String apelido, Date dataDeNascimento, Sexo sexo, Parente parente) {
         this.nome = nome;
+        this.apelido = apelido;
         this.dataDeNascimento = dataDeNascimento;
         this.sexo = sexo;
         this.parente = parente;
@@ -55,11 +58,23 @@ public class Crianca implements Serializable {
         return prenda;
     }
 
+    public String getApelido() {
+        return apelido;
+    }
+
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
+    }
+
     public boolean recebeuPrenda() {
-        return prenda != null ? true : false;
+        return prenda != null;
     }
 
     public void receberPrenda(Prenda prenda) throws Exception {
+        if (this.prenda != null) {
+            throw new Exception("crianca ja recebeu prenda");
+        }
+
         if (sexo == Sexo.Masculino && prenda == Prenda.Boneca) {
             throw new Exception("um menino nao pode receber uma boneca");
         }
@@ -101,8 +116,8 @@ public class Crianca implements Serializable {
 
     public Long calcularIdade() {
         Long idade = ChronoUnit.YEARS.between(
-                dataDeNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                LocalDate.now()
+            dataDeNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+            LocalDate.now()
         );
 
         return idade;
@@ -111,13 +126,13 @@ public class Crianca implements Serializable {
     @Override
     public String toString() {
         return "Crianca{" +
-                "codigo='" + codigo + '\'' +
-                ", nome='" + nome + '\'' +
-                ", dataDeNascimento=" + dataDeNascimento +
-                ", sexo=" + sexo +
-                ", parente=" + parente +
-                ", prenda=" + prenda +
-                ", removida=" + removida +
-                '}';
+            "codigo='" + codigo + '\'' +
+            ", nome='" + nome + '\'' +
+            ", dataDeNascimento=" + dataDeNascimento +
+            ", sexo=" + sexo +
+            ", parente=" + parente +
+            ", prenda=" + prenda +
+            ", removida=" + removida +
+        '}';
     }
 }

@@ -1,9 +1,11 @@
 package crianca.telas.cadastro_da_crianca;
 
+import crianca.tipos.Sexo;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class FormaularioDosDadosDaCrianca extends JPanel {
+public final class FormularioDosDadosDaCrianca extends JPanel {
     private JLabel labelNome = new JLabel("nome");
     public JTextField campoNome = new JTextField(20);
 
@@ -17,7 +19,7 @@ public class FormaularioDosDadosDaCrianca extends JPanel {
     private JLabel labeldataDeNascimento = new JLabel("data de nascimento");
     public JTextField campoDataDeNascimento = new JTextField(20);
 
-    public FormaularioDosDadosDaCrianca() {
+    public FormularioDosDadosDaCrianca() {
         setLayout(new GridLayout(6, 2, 5, 5));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
@@ -49,5 +51,15 @@ public class FormaularioDosDadosDaCrianca extends JPanel {
         }
 
         return null;
+    }
+
+    public void setSexo(Sexo sexo) {
+        if (sexo == Sexo.Masculino) {
+            radioButtonSexoMasculino.setSelected(true);
+        }
+
+        if (sexo == Sexo.Femenino) {
+            radioButtonSexoFemenino.setSelected(true);
+        }
     }
 }

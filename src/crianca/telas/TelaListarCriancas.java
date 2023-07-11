@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class  TelaListarCriancas extends JFrame {
+public final class TelaListarCriancas extends JFrame {
     public JTable tabela;
     public DefaultTableModel modeloDaTabela = new DefaultTableModel();
 
@@ -16,6 +16,7 @@ public class  TelaListarCriancas extends JFrame {
         modeloDaTabela.addColumn("idade");
         modeloDaTabela.addColumn("sexo");
         modeloDaTabela.addColumn("parente");
+        modeloDaTabela.addColumn("parentesco");
 
         tabela = new JTable(modeloDaTabela);
         JScrollPane painelDaTabela = new JScrollPane(tabela);

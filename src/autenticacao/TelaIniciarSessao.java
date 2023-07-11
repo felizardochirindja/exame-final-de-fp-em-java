@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TelaIniciarSessao extends JFrame {
+public final class TelaIniciarSessao extends JFrame {
     private JLabel labelUsuaio = new JLabel("usuario *");
     private JTextField campoUsuario = new JTextField(10);
 

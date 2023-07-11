@@ -4,15 +4,17 @@ import crianca.tipos.Parentesco;
 
 import java.io.Serializable;
 
-public class Parente implements Serializable {
+public final class Parente implements Serializable {
     private static final long serialVersionUID = -8577697151743549160L;
 
     private String codigo;
     private String nome;
+    private String apelido;
     private Parentesco parentesco;
 
-    public Parente(String nome, Parentesco parentesco) {
+    public Parente(String nome, String apelido, Parentesco parentesco) {
         this.nome = nome;
+        this.apelido = apelido;
         this.parentesco = parentesco;
     }
 
@@ -28,6 +30,10 @@ public class Parente implements Serializable {
         return nome;
     }
 
+    public String getApelido() {
+        return apelido;
+    }
+
     public Parentesco getParentesco() {
         return parentesco;
     }
@@ -35,9 +41,10 @@ public class Parente implements Serializable {
     @Override
     public String toString() {
         return "Parente{" +
-                "id='" + codigo + '\'' +
-                ", nome='" + nome + '\'' +
-                ", sexo='" + parentesco + '\'' +
-                '}';
+            "codigo='" + codigo + '\'' +
+            ", nome='" + nome + '\'' +
+            ", apelido='" + apelido + '\'' +
+            ", parentesco=" + parentesco +
+        '}';
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CriancaAcionador {
+public final class CriancaAcionador {
     private CriancaArmazenador armazenador;
 
     public CriancaAcionador(CriancaArmazenador armazenador) {
@@ -37,8 +37,12 @@ public class CriancaAcionador {
         armazenador.deletar(id);
     }
 
-    public void actualizarCrianca(String id, Crianca crianca) {
-        armazenador.actualizar(id, crianca);
+    public void actualizarCrianca(String codigo, Crianca crianca) throws Exception {
+        if (armazenador.lerPorId(codigo) == null) {
+            throw new Exception("crianca com o id " + codigo + " nao existe");
+        }
+
+        armazenador.actualizar(codigo, crianca);
     }
 
     public List<Crianca> listarCriancasQueReceberamPrenda() {
@@ -54,8 +58,8 @@ public class CriancaAcionador {
         return criancas;
     }
 
-    public void receberPrenda(String id) {
-        Crianca crianca = armazenador.lerPorId(id);
+    public Prenda receberPrenda(String codigoDaCrinca) {
+        Crianca crianca = armazenador.lerPorId(codigoDaCrinca);
 
         Prenda prenda = Prenda.Carrinho;
 
@@ -69,15 +73,18 @@ public class CriancaAcionador {
             throw new RuntimeException(e);
         }
 
-        armazenador.actualizar(id, crianca);
+        armazenador.actualizar(codigoDaCrinca, crianca);
+
+        return prenda;
     }
 
     public List<Crianca> pesquisarCriancasAbaixoDeDezAnosSemPrenda() {
-        List<Crianca> criancas = armazenador.listar();
+        List<Crianca> todasCriancas = armazenador.listar();
+        List<Crianca> criancas = new ArrayList<>();
 
-        for (int i = 0; i < criancas.size(); i++) {
-            if (criancas.get(i).foiRemovida() || !criancas.get(i).recebeuPrenda() || criancas.get(i).calcularIdade() > 10) {
-                criancas.remove(i);
+        for (int i = 0; i < todasCriancas.size(); i++) {
+            if (!todasCriancas.get(i).foiRemovida() && !todasCriancas.get(i).recebeuPrenda() && todasCriancas.get(i).calcularIdade() < 10) {
+                criancas.add(todasCriancas.get(i));
             }
         }
 

@@ -3,7 +3,7 @@ package crianca.telas.cadastro_da_crianca;
 import javax.swing.*;
 import java.awt.*;
 
-public class FormularioDosDadosDoParente extends JPanel {
+public final class FormularioDosDadosDoParente extends JPanel {
     private JLabel labelNome = new JLabel("nome");
     public JTextField campoNome = new JTextField(20);
 

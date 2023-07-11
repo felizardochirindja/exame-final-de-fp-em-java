@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class TelaListarCriancasComPrenda extends JFrame {
+public final class TelaListarCriancasComPrenda extends JFrame {
     private JTable tabela;
     public DefaultTableModel modeloDaTabela = new DefaultTableModel();
 
@@ -30,6 +30,5 @@ public class TelaListarCriancasComPrenda extends JFrame {
         setSize(1000, 600);
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
 }
